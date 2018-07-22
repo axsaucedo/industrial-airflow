@@ -522,27 +522,37 @@ But how do we put this into practice?
 # 2. Machine Learning Pipelines
 
 [NEXT]
+The Crypto-ML team realised copy pasting code from 
 
-# What is an ML Pipeline?
+### Stack overflow
 
-Generally, it's the 
+wasn't enough...
 
+![classification_large](images/copypasta.jpg)
+
+[NEXT]
+
+They had to do it properly, so they learned how to build their
+
+## Machine Learning Pipeline
 
 [NEXT]
 <!-- .slide: data-transition="slide-in fade-out" -->
-Overview of a generic ML pipeline
+## They found it breaks into
 
 ![classification_large](images/mlall.png)
 
+**Model training/creation** and then **prediction with model**
+
 [NEXT]
 <!-- .slide: data-transition="fade-in fade-out" -->
-Breaks down into "learning the function"
+This breaks down into 1) "learning the function"
 
 ![classification_large](images/mltrain.png)
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
-And then, "using our function to predict"
+And then, "using our function to predict" unseen inputs
 
 ![classification_large](images/mlall.png)
 
@@ -554,7 +564,10 @@ And then, "using our function to predict"
 
 * Focus on improving your "feature space"
     * This is basically how you represent your data
-    * And what features can you get from it
+        * e.g. squares/triangles == area + perimeter
+
+    * And what other useful features can you get from it
+        * e.g. color, number of corners, etc
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
@@ -564,7 +577,9 @@ And then, "using our function to predict"
 
 * Furthermore, training the model requires:
     * A representative sample of training data
+
     * Reasonable methods to assess accuracy
+
     * A relevant model for the type of prediction
 
 
@@ -756,28 +771,30 @@ results = predict(prices, times, 5)
 ### Success!
 
 [NEXT]
-### Training an RNN in Python
+### Going Deep: Training an RNN in Python
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
 
 def deep_predict(prices):
 
-    p = 10
-
+    # <- Generate your transformed data
+    x, y = build_lstm_data(prices, 50)
+   
+    # <- Select your model
     model = get_rnn_model()
 
-    x, y = build_lstm_data(prices, 50)
-
+    # <- Train your model
     model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
 
+    # <- Choose how many unseen datapoints
+    p = 10
+
+    # <- Predict using your model
     return rnn_predict(model, x, prices, p)
 
 </code></pre>
 
-* Build model
-* Compute the weights
-* Return the prediction
-
+### Following the exact same steps!
 
 [NEXT]
 ### Not too different, eh!
@@ -803,13 +820,13 @@ def predict(prices, times, predict=10):
 
 def deep_predict(prices):
 
-    p = 10
+    x, y = build_lstm_data(prices, 50)
 
     model = get_rnn_model()
 
-    x, y = build_lstm_data(prices, 50)
-
     model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
+
+    p = 10
 
     return rnn_predict(model, x, prices, p)
 
@@ -887,7 +904,7 @@ and then, separately in production
 [NEXT]
 
 # Crypto-ML 
-### has their own DL Pipeline!
+### has their own ML/DL Pipeline!
 
 Are we done then?
 
@@ -988,12 +1005,12 @@ def deep_predict(d_prices, d_times, predict=10):
     times = load(d_times)
 
     model = utils.get_rnn_model()
-
     model.fit(time, prices, batch_size=512, nb_epoch=1, validation_split=0.05)
 
     predict_times = get_prediction_timeline(times, predict)
 
     return dump(model.predict(predict_times))
+
 </code></pre>
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; "># utils.py
@@ -1003,6 +1020,7 @@ def dump(o):
 
 def load(o):
     return pickle.loads(bytearray.fromhex(o))
+
 </code></pre>
 
 [NEXT]
@@ -1144,16 +1162,19 @@ We can pack our ba- oh, not yet?
 # 4. Smart Data Pipelines
 
 [NEXT]
-### The Crypto-ML has now an exponentially increasing amount of internal use-cases
+The Crypto-ML has now an 
+### exponentially increasing 
+amount of 
+## internal/external use-cases
 
 Their datapipeline is getting unmanagable!
 
 [NEXT]
 
-## They realised ML is the tip of the iceberg
+## They also realised ML is the tip of the iceberg
 ![distributed_architecture](images/mlecosystem.png)
 
-Only a small fraction of real-world machine learning is composed of actual ML code
+People forget only a small fraction of real-world machine learning is composed of actual ML code
 
 [NEXT]
 ## Growing data flow complexity
@@ -1179,11 +1200,6 @@ Only a small fraction of real-world machine learning is composed of actual ML co
 ![airflow](images/airflow.png)
 
 [NEXT]
-# Introducing Airflow
-
-The swiss army knife of data pipelines
-
-[NEXT]
 ## But before jumping in
 
 We'll clarify the distinction between the terms:
@@ -1199,7 +1215,32 @@ We'll clarify the distinction between the terms:
 
 are a subset of 
 
-### Data Pipelines
+# Data Pipelines
+
+[NEXT]
+
+Data pipelines conceptually encompass
+
+#### Taking data from somewhere
+#### Doing something with it
+#### Putting results back somewhere else
+
+This encompasses ML processes
+
+[NEXT]
+
+Data pipelines also encompases extra complexity:
+* Scalability
+* Monitoring
+* Latency
+* Versioning
+* Testing
+
+[NEXT]
+# Introducing Airflow
+
+The swiss army knife of data pipelines
+
 
 [NEXT]
 # What Airflow is NOT
@@ -1345,18 +1386,19 @@ Sub-DAG:
 
 [NEXT]
 
-# Airflow Alternatives
+## Airflow Alternatives
 * Luigi
 * Pinball
 * Seldon Core
 
-## Other similar (but different) frameworks
+<br>
+## Other similar (but different)
 * Dask
 * Apache Kafka
 
 
 [NEXT SECTION]
-# 5. Further Machine Learning Infrastructure
+# 5. Further Infrastructure
 
 
 [NEXT]
