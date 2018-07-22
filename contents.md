@@ -200,7 +200,7 @@ manager.send_tasks()
 https://github.com/axsauze/crypto-ml
 
 ### Slides
-http://github.com/axsauze/industrial-machine-learning
+http://github.com/axsauze/industrial-airflow
 
 
 
@@ -899,6 +899,20 @@ Normally you would
 and then, separately in production 
 ### run the model for predictions
 
+[NEXT]
+
+### Don't underestimate hidden complexities
+
+* Complexity of staging and deploying ML models
+* Storing and standardising your training data
+* Abstracting interfaces to different ML libraries
+* Distributing load across infrastructure
+* Idle resource time minimisation
+* Node failure back-up strategies
+* Testing of Machine Learning functionality
+* Monitoring of ML ecosystem
+
+And the list goes on...
 
 
 [NEXT]
@@ -1190,7 +1204,7 @@ People forget only a small fraction of real-world machine learning is composed o
 <br>
 
 [NEXT]
-# You want to go from here
+# They want to go from here
 
 ![cron_tab](images/crontab.jpg)
 
@@ -1219,22 +1233,29 @@ are a subset of
 
 [NEXT]
 
-Data pipelines conceptually encompass
+Data pipelines generally encompass
 
 #### Taking data from somewhere
 #### Doing something with it
 #### Putting results back somewhere else
 
+
+<video src="images/automation.mp4" autoplay="" loop="" playsinline="">
+</video>
+
 This encompasses ML processes
 
 [NEXT]
 
-Data pipelines also encompases extra complexity:
+Data pipelines often includes extra complexity:
 * Scalability
 * Monitoring
 * Latency
 * Versioning
 * Testing
+
+<br>
+### Thankfully we have tools to help us
 
 [NEXT]
 # Introducing Airflow
@@ -1277,84 +1298,154 @@ The swiss army knife of data pipelines
 
 [NEXT]
 
-# What Airflow IS
+## Let's now dive into Airflow
 
 [NEXT]
 <!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-## ✅  Written in Python with ♥ by AirBnb
+# Airflow 
+* A data pipeline framework 
+* Written in Python 
+* It has an active community
+* Provides a UI for management
 
 [NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Alternative to Luigi + Chronos (also built by AirBnb) 
-
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅  Has a scheduler (like chronjob, but not like cronjob)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Can define tasks and dependent tasks (as a pipeline)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Has real-time visualisation of jobs
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Modular separation between framework and logic
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Can run on top of celery (without any modifications)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Being introduced to the apache family (incubation)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Actively maintained and growing community
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# What Airflow IS
-<br>
-## ✅ Used by tons of companies (AirBnB, Paypal, Quora,)
-
-[NEXT]
-# The DAG Architecture
+## DAGs are Airflow's core
 
 ![cron_tab](images/graphview.png)
 
+## DAG = Directed Acyclic Graphs
+
+``` python
+# Define DAG
+DAG = DAG(dag_id="test", start_date=datetime.now(), schedule_interval="@once")
+
+# Define operators
+operator_1 = ...
+
+# Define order
+operator_1 >> operator_2 >> operator_3
+```
+<!-- .element: style="font-size: 0.4em; line-height: 1em;" -->
+
+
+which define the sequence of execution for each operator
+
 
 [NEXT]
-# The scheduler
+## Airflow has a scheduler
+
+Which can be used to trigger dags on a schedule
 
 ![cron_tab](images/scheduler.png)
+
+And can also be used to monitor the current status states
+
+[NEXT]
+
+## DAGs consist of Operators
+
+Operators are a wrapper for Python data pipeline logic
+
+![cron_tab](images/airflowoperators.png)
+
+Airflow provides a broad set of default operators 
+
+[NEXT]
+
+## Data can be passed
+
+We can pass data across operators downstream with xcom
+
+This is useful to hold state data, such as a DB index ID
+
+![cron_tab](images/xcom.png)
+
+And we can visualise this in the UI
+
+[NEXT]
+## Airflow is modular
+
+Modular separation of Operator logic & DAG definition
+
+``` python
+# Creating DAG
+DAG = DAG(dag_id='test', start_date=datetime.now(), schedule_interval='@once')
+
+# Create python functions
+def push_function(**kwargs):
+    return ['a', 'b', 'c']
+
+def pull_function(**kwargs):
+    ls = kwargs['ti'].xcom_pull(task_ids='push_task')
+    print(ls)
+
+# Define Operators
+pull_task = PythonOperator(
+    task_id='pull_task',
+    python_callable=pull_function,
+    provide_context=True,
+    dag=DAG)
+
+push_task = PythonOperator(
+    task_id='push_task',
+    python_callable=push_function,
+    provide_context=True,
+    dag=DAG)
+
+# DAG order definition
+push_task >> pull_task
+```
+<!-- .element: style="font-size: 0.4em; line-height: 1em;" -->
+
+This allows for better testing, and reusability
+
+
+[NEXT]
+## Airflow is extensible 
+
+Airflow also allows you to write your own custom "plugins"
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+from util import load, dump
+class AirflowPlugin(object):
+    # The name of your plugin (str)
+    name = None
+    # A list of class(es) derived from BaseOperator
+    operators = []
+    # A list of class(es) derived from BaseHook
+    hooks = []
+    # A list of class(es) derived from BaseExecutor
+    executors = []
+    # A list of references to inject into the macros namespace
+    macros = []
+    # A list of objects created from a class derived
+    # from flask_admin.BaseView
+    admin_views = []
+    # A list of Blueprint object created from flask.Blueprint
+    flask_blueprints = []
+    # A list of menu links (flask_admin.base.MenuLink)
+    menu_links = []
+
+</code></pre>
+
+It's possible to write your own Operators, hooks, etc
 
 
 [NEXT]
 # The tree view (and sub-components)
 
 ![cron_tab](images/treeview.png)
+
+[NEXT]
+## The Crypto-ML Usecase
+
+Crypto-ML wants a workflow where:
+
+* They pull crypto-data every day
+* Data is transformed & standardised
+* Once ready, a prediction should be computed
+* Prediction should be stored in DB
+* If relevant, a trade should be executed
 
 [NEXT]
 ## The Crypto-ML Usecase
@@ -1396,46 +1487,13 @@ Sub-DAG:
 * Dask
 * Apache Kafka
 
-
-[NEXT SECTION]
-# 5. Further Infrastructure
-
-
-[NEXT]
-The CryptoML team remembers the easy days...
-
-...when they only had a few new users a day
-
-Now they have much heavier traffic!
-
-They are working with large organsations!
-
-They are processing massive loads of ML requests!
-
-<br>
-### Their DevOps infrastructure 
-# Can't keep up!
-
-[NEXT]
-
-### Underestimating DevOps complexity
-
-* Complexity of staging and deploying ML models
-* Storing and standardising your training data
-* Abstracting interfaces to different ML libraries
-* Distributing load across infrastructure
-* Idle resource time minimisation
-* Node failure back-up strategies
-* Testing of Machine Learning functionality
-* Monitoring of ML ecosystem
-* And the list goes on and on...
-
 [NEXT]
 
 ### Special Mentions
 * Docker
 * Kubernetes
 
+<br>
 #### Implementations are in the codebase
 
 
@@ -1455,13 +1513,16 @@ the roller-coaster keeps going!
 
 ### But for us?
 
-> Obtained an intuitive understanding on ML
-> 
-> Learned about caveats on practical ML
-> 
-> Obtained tips on building distributed architectures
-> 
-> Got an taste of elastic DevOps infrastructure
+> Got an overview in scaling data pipelines
+> <br>
+> <br>
+> Airflow components (Celery, ML, etc)
+>
+> Difference between ML & Data Pipelines
+>
+> Overview of Airflow + Usecase
+
+### The big picture
 
 
 [NEXT]
@@ -1470,7 +1531,7 @@ the roller-coaster keeps going!
 https://github.com/axsauze/crypto-ml
 
 ### Slides
-http://github.com/axsauze/industrial-machine-learning
+http://github.com/axsauze/industrial-airflow
 
 [NEXT]
 <!-- .slide: data-background="images/network-background.jpg" class="background" -->
