@@ -95,11 +95,11 @@
 > Overview  & caveats in scaling data pipelines
 > <br>
 > <br>
+> Airflow components (Celery, ML models, etc)
+>
 > Introducing difference between ML & Data Pipelines
 >
-> Brief, intuitive overview of ML
-> 
-> Going distributed, and beyond
+> Overview of Airflow + Usecase
 
 ### The big picture
 
@@ -123,7 +123,10 @@
 > <br>
 > A large scale <font style="color: cyan">crypto-analysis</font> platform
 >
-> Heavy compute <font style="color: cyan">Deep Learning, Transform, Fetch...</font> 
+> Heavy compute <font style="color: cyan">data analysis, Transform, Fetch...</font> 
+>
+> Going deep running <font style="color: cyan">predictions on LSTMs</font>
+>
 
 <br>
 #### Can we survive the 2017 <font style="color: cyan">crypto-craze?</font>
@@ -190,22 +193,6 @@ manager.send_tasks()
 <div class="clear-col"></div>
 
 <!-- .element style="color: white;" -->
-
-[NEXT]
-<!-- .slide: data-background="images/network-background.jpg" class="background" -->
-# Small Disclaimer
-### At Eigen, we don't use deep learning
-> 
-> We use probabilistic ML models
->
-> Our models require small training data
->
->
-> Focus is on feature engineering 
-> 
-> A lot of work on data representation/processing
->
-
 
 [NEXT]
 <!-- .slide: data-background="images/network-background.jpg" class="background" -->
@@ -278,7 +265,10 @@ by learning from examples
 <br>
 
 <div class="left-col">
-**$f(x̄) = mx̄ + b$**, where:
+**$f(x̄) = mx̄ + b$**
+<br>
+<br>
+where:
 <br>
 <br>
 **x̄** is input (area & perimeter) </li>
@@ -291,7 +281,6 @@ by learning from examples
 <img width="40%" src="images/classification-line.png">
 
 [NEXT]
-<!-- .slide: data-transition="fade-in slide-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
 
 ## So we can predict new data
 
@@ -301,7 +290,7 @@ by learning from examples
 The result **$f(x̄)$** states whether it's a triangle or square
 <br>
 <br>
-(i.e. if it's larger than 0.5 it's triangle otherwise square)
+(e.g. if it's larger than 0.5 it's triangle otherwise square)
 
 
 
@@ -343,7 +332,7 @@ Keep learning by adjusting the weights...
 
 [NEXT]
 <!-- .slide: data-transition="slide-in fade-out" -->
-## Once we find the weights
+## We are able to find the weights
 
 <img width="40%" src="images/classification-line.png">
 
@@ -353,79 +342,11 @@ i.e. **$f(x̄)$ = triangle  if ($0.3 x̄ + 10$) > 0.5 else square**
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
-### We predict output of unseen inputs
+### And predict output of unseen inputs
 
 ![classification_small](images/classification-newinput.png)
 
 We now have a system that "knows" how to differentiate triangles from squares
-
-[NEXT]
-## That's great
-
-But how do we put this into practice?
-
-[NEXT]
-### The infamous
-
-# Machine Learning Pipeline
-
-[NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
-Overview of a generic ML pipeline
-
-![classification_large](images/mlall.png)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" -->
-Breaks down into "learning the function"
-
-![classification_large](images/mltrain.png)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in slide-out" -->
-And then, "using our function to predict"
-
-![classification_large](images/mlall.png)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in slide-out" -->
-#### Important: Data transformation & Features
-
-![classification_large](images/mltrainhighlight.png)
-
-* Focus on improving your "feature space"
-    * This is basically how you represent your data
-    * And what features can you get from it
-
-[NEXT]
-<!-- .slide: data-transition="fade-in slide-out" -->
-#### Important: ML Model Training
-
-![classification_large](images/mltrainhighlight.png)
-
-* Furthermore, training the model requires:
-    * A representative sample of training data
-    * Reasonable methods to assess accuracy
-    * A relevant model for the type of prediction
-
-
-
-[NEXT]
-### We're ML experts!
-
-Please collect your certificates after the talk
-<br>
-<br>
-
-These are valid in:
-
-* Your Linkedin profile
-* Non-tech Meetups and Parties
-* Any time you reply to a tweet
-
-
-[NEXT]
-# Time to build our pipeline
 
 
 [NEXT]
@@ -499,6 +420,171 @@ The hello_world of sequential models
 
 Predicting prices by fitting a line on set of time-series points
 
+[NEXT]
+
+If we use this, the predicted bitcoin price would be
+## A million++ in months
+
+![rnn_diagram](images/extrapolating.png)
+
+Not that people didn't do it...
+
+
+[NEXT]
+And the Crypto-ML wanted to go full hype...
+
+# Deep Neural Networks
+
+indeed...
+
+
+[NEXT]
+
+#### They learned that Neural Network neurons 
+### have the same function!
+
+![perceptron](images/perceptron.svg)
+
+`f(x) = mx + b`
+<br>
+
+
+The perceptron function
+
+
+
+[NEXT]
+### So they tooked one neuron
+
+![rnn_diagram](images/rnn-perceptron.svg)
+
+[NEXT]
+### And added more
+
+![rnn_diagram](images/rnn-feedforward.svg)
+
+To allow for more complex functions
+
+
+
+[NEXT]
+### With a few layers
+
+![deep_rnn_diagram](images/rnn-feedforwardlayers.svg)
+
+To give more flexibility for learning
+
+[NEXT]
+
+### Then found some deep learning tutorials
+
+![perceptron_learning](images/layer.jpg)
+
+[NEXT]
+### And added many more hidden layers
+
+![deep_rnn_diagram](images/rnn-deepfeedforward.svg)
+
+[NEXT]
+
+Specifically for sequential models?
+## Deep Recurrent Neural Networks
+# (e.g. LSTMs)
+
+
+[NEXT]
+### Unrolled Network for Sequential Data
+
+Each prediction is a **time step** trying to get the next.
+
+Previous predictions help make the _next_ prediction.
+
+![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
+
+This allows the network to "hold memory"
+
+[NEXT]
+
+### Loss/Cost function
+Cost function is based on getting the prediction right!
+
+![rnn_unrolled_chars](images/rnn-unrolled-chars9.svg)
+
+
+
+
+[NEXT]
+## That's great
+
+But how do we put this into practice?
+
+[NEXT SECTION]
+# 2. Machine Learning Pipelines
+
+[NEXT]
+
+# What is an ML Pipeline?
+
+Generally, it's the 
+
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+Overview of a generic ML pipeline
+
+![classification_large](images/mlall.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+Breaks down into "learning the function"
+
+![classification_large](images/mltrain.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+And then, "using our function to predict"
+
+![classification_large](images/mlall.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+#### Important: Data transformation & Features
+
+![classification_large](images/mltrainhighlight.png)
+
+* Focus on improving your "feature space"
+    * This is basically how you represent your data
+    * And what features can you get from it
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+#### Important: ML Model Training
+
+![classification_large](images/mltrainhighlight.png)
+
+* Furthermore, training the model requires:
+    * A representative sample of training data
+    * Reasonable methods to assess accuracy
+    * A relevant model for the type of prediction
+
+
+
+[NEXT]
+### We're ML experts!
+
+Please collect your certificates after the talk
+<br>
+<br>
+
+These are valid in:
+
+* Your Linkedin profile
+* Non-tech Meetups and Parties
+* Any time you reply to a tweet
+
+
+[NEXT]
+# Time to build our pipeline
 
 [NEXT]
 <!-- .slide: data-transition="slide-in fade-out" -->
@@ -670,82 +756,6 @@ results = predict(prices, times, 5)
 ### Success!
 
 [NEXT]
-But the Crypto-ML team stumbled upon some neural network tutorials...
-
-
-[NEXT]
-
-#### They learned that Neural Network neurons 
-### have the same function!
-
-![perceptron](images/perceptron.svg)
-
-`f(x) = mx + b`
-<br>
-
-
-The perceptron function
-
-
-
-[NEXT]
-### So they tooked one neuron
-
-![rnn_diagram](images/rnn-perceptron.svg)
-
-[NEXT]
-### And added more
-
-![rnn_diagram](images/rnn-feedforward.svg)
-
-To allow for more complex functions
-
-
-
-[NEXT]
-### With a few layers
-
-![deep_rnn_diagram](images/rnn-feedforwardlayers.svg)
-
-To give more flexibility for learning
-
-[NEXT]
-
-### Then found some deep learning tutorials
-
-![perceptron_learning](images/layer.jpg)
-
-[NEXT]
-### And added many more hidden layers
-
-![deep_rnn_diagram](images/rnn-deepfeedforward.svg)
-
-[NEXT]
-
-Specifically for sequential models?
-## Deep Recurrent Neural Networks
-# (e.g. LSTMs)
-
-
-[NEXT]
-### Unrolled Recurrent Network
-Previous predictions help make the _next_ prediction.
-
-Each prediction is a **time step**.
-
-![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
-
-Hidden layer's input includes the output of itself 
-
-[NEXT]
-
-### Loss/Cost function
-Cost function is based on getting the prediction right!
-
-![rnn_unrolled_chars](images/rnn-unrolled-chars9.svg)
-
-
-[NEXT]
 ### Training an RNN in Python
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
@@ -864,7 +874,7 @@ results = deep_predict(prices, times, 5)
 
 In this example we are training and predicting 
 
-### in the same function.
+### in the same worflow.
 
 Normally you would 
 ### train and persist your model 
@@ -1333,9 +1343,20 @@ Sub-DAG:
 ## [airflow.apache.org](https://airflow.apache.org/)
 
 
+[NEXT]
+
+# Airflow Alternatives
+* Luigi
+* Pinball
+* Seldon Core
+
+## Other similar (but different) frameworks
+* Dask
+* Apache Kafka
+
 
 [NEXT SECTION]
-# 5. Elastic DevOps Infrastructure
+# 5. Further Machine Learning Infrastructure
 
 
 [NEXT]
@@ -1367,146 +1388,13 @@ They are processing massive loads of ML requests!
 * Monitoring of ML ecosystem
 * And the list goes on and on...
 
-
-[NEXT]
-## Did anyone say docker?
-
-![weight_matrix](images/docker.png)
-
-Package it. Ship it.
-
-
-[NEXT]
-## Gotta love the simplicity
-
-```
-from conda/miniconda3-centos7:latest
-
-ADD . /crypto_ml/
-WORKDIR /crypto_ml/
-
-# Dependency for one of the ML predictors
-RUN yum install mesa-libGL -y
-
-# Install all the dependencies
-RUN conda env create -f crypto_ml.yml
-```
-
-and...
-
-```
-docker -t crypto_ml .
-```
-
-it's done!
-
-
-[NEXT]
-## Can this be more awesome?
-####Yes it can!
-
-Packaging it up and installing through pip/conda.
-
-```
-from conda/miniconda3-centos7:latest
-RUN conda install <YOUR_PACKAGE>
-```
-Nice and simple!
-
-[NEXT]
-### The obvious docker-compose
-<pre><code class="code python hljs" style="font-size: 0.6em; line-height: 1em">version: '2'
-services:
-    manager:
-        container_name: crypto_manager
-        image: crypto_ml
-        build: .
-        links:
-            - rabbitmq
-        depends_on:
-            - rabbitmq
-        command: tail -f /dev/null
-    worker:
-        container_name: crypto_worker
-        image: crypto_ml
-        build: .
-        links:
-            - rabbitmq
-        depends_on:
-            - rabbitmq
-        command: /usr/local/envs/crypto_ml/bin/celery -A crypto_ml worker --prefetch-multiplier 1 --max-tasks-per-child 1 -O fair
-    rabbitmq:
-        container_name: rabbitmq
-        image: rabbitmq:3.6.0
-        environment:
-            - RABBITMQ_DEFAULT_USER=user
-            - RABBITMQ_DEFAULT_PASS=1234
-        ports:
-            - 4369
-            - 5672
-            - 15672
-</code></pre>
-
-It all just works automagically!
-
-```
-docker-compose up --scale crypto_worker=4
-```
-
-[NEXT]
-#### Taking it to the next level with
-# Kubernetes
-
-![weight_matrix](images/kube.png)
-
-[NEXT]
-#### All the YML
-
-![distributed_architecture](images/kubectl.png)
-
-Creating all the services and controllers
-
-```
-kubectl create -f k8s/*
-```
-
 [NEXT]
 
-# Kubernetes: Dev
+### Special Mentions
+* Docker
+* Kubernetes
 
-#### Development
-* Minikube
-* Docker for Mac
-
-[NEXT]
-
-# Kubernetes: Prod
-#### Enterprise
-* Elastic Container Service for K8s (AWS)
-* CoreOS Tectonic
-* Red Hat OpenShift
-
-[NEXT]
-# Kubernetes: Tools
-#### Many options
-* CloudFormation (AWS)
-* Terraform
-* Kops
-
-[NEXT]
-#### Docker for Mac now supports it!
-
-![weight_matrix](images/docker-mac.png)
-
-**Mini fist-pump**
-
-[NEXT]
-
-## Introducing Sledon
-<iframe style="height: 50vh; width: 100vw" src="https://docs.google.com/presentation/d/1CUrELIqLqnfiA54kRqyhv0fD3qt8hsjriH9Dm0ttE0A/edit#slide=id.g3bf3d35c42_0_55"></iframe>
-#### <a href="http://bit.ly/seldon-core-slides">bit.ly/seldon-core-slides</a>
-
-
+#### Implementations are in the codebase
 
 
 [NEXT]
