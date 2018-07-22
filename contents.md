@@ -1,7 +1,7 @@
 <!-- .slide: data-background="images/network-background.jpg" class="background" -->
 
 <h2>Industrial Machine Learning</h2>
-<h4>Horizontally scalable Machine Learning in Python</h4>
+<h4>Horizontally Scalable Data Pipelines with Airflow</h4>
 <p>
   <br />
   <br />
@@ -17,7 +17,7 @@
 
 <h2>Industrial Machine Learning</h2>
 
-<h4>Horizontally scalable Machine Learning in Python</h4>
+<h4>Horizontally Scalable Data Pipelines with Airflow</h4>
 
 <table class="bio-table">
   <tr>
@@ -31,7 +31,7 @@
     <td style="float: left; color: white; font-size: 0.7em;">
 
         <br>
-        Head of Deployed Engineering
+        Head of Solutions Eng/Sci
         <br>
         <a style="color: cyan" href="http://eigentech.com">Eigen Technologies</a>
         <br>
@@ -46,9 +46,9 @@
         <a style="color: cyan" href="#">European Commission</a>
         <br>
         <br>
-        Advisor
+        Advisory group
         <br>
-        <a style="color: cyan" href="http://teensinai.com">TeensInAI.com Initiative</a>
+        <a style="color: cyan" href="http://teensinai.com">TeensInAI</a>
         <br>
 
     </td>
@@ -64,15 +64,16 @@
 
 # Eigen Technologies
 
-> Building legal/back-office automation ML
+> Building large scale ML for text analysis
 > <br>
 > <br>
-> Working in Finance, Legal and Insurance
+> Large scale front- & back-office automation
 >
-> Recently raised 17.5m to expand operations
-> 
-> Using probabilistic models for text analysis
+> Mainly operating in Finance, Insurance & Legal
+>
+> Recently raised $17.5m to expand R&D & scale
 
+<br>
 ### PS. We are hiring -> <a href="http://eigentech.com">eigentech.com</a>
 
 
@@ -91,12 +92,12 @@
 
 ## Today: Industry-ready ML
 
-> An overview of caveats in deploying ML
+> Overview  & caveats in scaling data pipelines
 > <br>
 > <br>
-> Very high level talk
+> Introducing difference between ML & Data Pipelines
 >
-> Intuitive overview of ML
+> Brief, intuitive overview of ML
 > 
 > Going distributed, and beyond
 
@@ -120,11 +121,12 @@
 > Let's jump the hype-train! 
 > <br>
 > <br>
-> A ML framework for <font style="color: cyan">crypto-data</font>
+> A large scale <font style="color: cyan">crypto-analysis</font> platform
 >
-> Supporting <font style="color: cyan">heavy compute/memory ML</font>
->
-> Can our system survive the 2017 <font style="color: cyan">crypto-craze?</font>
+> Heavy compute <font style="color: cyan">Deep Learning, Transform, Fetch...</font> 
+
+<br>
+#### Can we survive the 2017 <font style="color: cyan">crypto-craze?</font>
 
 [NEXT]
 <!-- .slide: data-background="images/network-background.jpg" class="background smallquote" -->
@@ -133,16 +135,10 @@
 
 > All historical data from top 100 cryptos
 >
-> Data goes from beginning to 11/2017
+> Data goes from beginning to 09/2017
 
 > 563871 daily-price (close) points 
->
-> <font style="font-weight: bold; color: cyan">Objectives:</font>
-<font style="color: white">
-* Supporting heavy ML computations
-* Supporting increasing traffic 
 
-</font>
 
 
 [NEXT]
@@ -195,6 +191,21 @@ manager.send_tasks()
 
 <!-- .element style="color: white;" -->
 
+[NEXT]
+<!-- .slide: data-background="images/network-background.jpg" class="background" -->
+# Small Disclaimer
+### At Eigen, we don't use deep learning
+> 
+> We use probabilistic ML models
+>
+> Our models require small training data
+>
+>
+> Focus is on feature engineering 
+> 
+> A lot of work on data representation/processing
+>
+
 
 [NEXT]
 <!-- .slide: data-background="images/network-background.jpg" class="background" -->
@@ -238,19 +249,23 @@ def predict_crypto(self, crypto_data):
 
 ![shapes](images/everywhere.jpg)
 
-
 [NEXT]
-Given some input data, predict the correct output
+
+## They learned, it's basically
+
+automatically learning from data examples
+
+to predict an output based on an input
 
 ![shapes](images/shapes.svg)
 
-Let's try to predict whether a shape is a square or a triangle
+**e.g. telling whether a shape is a square or a triangle **
 
-### How do we do this?
+by learning from examples
 
 
 [NEXT]
-## Let's visualise it
+## More specifically
 
 * Imagine a 2-d plot
 * The x-axis is the area of the input shape
@@ -259,7 +274,8 @@ Let's try to predict whether a shape is a square or a triangle
 ![classification](images/classification-points.png)
 
 [NEXT]
-## All about the function
+## We want to learn a function
+<br>
 
 <div class="left-col">
 **$f(x̄) = mx̄ + b$**, where:
@@ -274,6 +290,14 @@ Let's try to predict whether a shape is a square or a triangle
 
 <img width="40%" src="images/classification-line.png">
 
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
+
+## So we can predict new data
+
+![classification_small](images/classification-newinput.png)
+
+
 The result **$f(x̄)$** states whether it's a triangle or square
 <br>
 <br>
@@ -282,7 +306,7 @@ The result **$f(x̄)$** states whether it's a triangle or square
 
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+<!-- .slide: data-transition="slide-in fade-out" -->
 ## The machine does the learning
 
 ![classification](images/feature-1.jpg)
@@ -290,7 +314,7 @@ The result **$f(x̄)$** states whether it's a triangle or square
 We give it two examples (one square, one triangle)
 
 [NEXT]
-<!-- .slide: data-transition="fade-in" data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+<!-- .slide: data-transition="fade-in" -->
 ## The machine does the learning
 
 ![classification](images/feature-2.jpg)
@@ -298,7 +322,7 @@ We give it two examples (one square, one triangle)
 We give it more examples
 
 [NEXT]
-<!-- .slide:data-transition="fade-in slide-out" data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+<!-- .slide:data-transition="fade-in slide-out" -->
 ## The machine does the learning
 
 ![classification](images/feature-3.jpg)
@@ -307,21 +331,19 @@ and more...
 
 
 [NEXT]
-### Minimising loss function
-
-We optimise the model by **minimising its loss**.
-
-Keep adjusting the weights...
-
-...until loss is not getting any smaller.
+### By minimising its cost function
 
 ![gradient_descent](images/gradient_descent_cropped.gif)
+
+Keep learning by adjusting the weights...
+
+...until our function becomes more accurate
 
 
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-## Finding the weights!
+<!-- .slide: data-transition="slide-in fade-out" -->
+## Once we find the weights
 
 <img width="40%" src="images/classification-line.png">
 
@@ -330,12 +352,61 @@ When it finishes, we find optimised weights and biases
 i.e. **$f(x̄)$ = triangle  if ($0.3 x̄ + 10$) > 0.5 else square**
 
 [NEXT]
-<!-- .slide: data-transition="fade-in slide-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-## Now predict new data
+<!-- .slide: data-transition="fade-in slide-out" -->
+### We predict output of unseen inputs
 
 ![classification_small](images/classification-newinput.png)
 
 We now have a system that "knows" how to differentiate triangles from squares
+
+[NEXT]
+## That's great
+
+But how do we put this into practice?
+
+[NEXT]
+### The infamous
+
+# Machine Learning Pipeline
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+Overview of a generic ML pipeline
+
+![classification_large](images/mlall.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+Breaks down into "learning the function"
+
+![classification_large](images/mltrain.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+And then, "using our function to predict"
+
+![classification_large](images/mlall.png)
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+#### Important: Data transformation & Features
+
+![classification_large](images/mltrainhighlight.png)
+
+* Focus on improving your "feature space"
+    * This is basically how you represent your data
+    * And what features can you get from it
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+#### Important: ML Model Training
+
+![classification_large](images/mltrainhighlight.png)
+
+* Furthermore, training the model requires:
+    * A representative sample of training data
+    * Reasonable methods to assess accuracy
+    * A relevant model for the type of prediction
 
 
 
@@ -352,6 +423,9 @@ These are valid in:
 * Non-tech Meetups and Parties
 * Any time you reply to a tweet
 
+
+[NEXT]
+# Time to build our pipeline
 
 
 [NEXT]
@@ -418,37 +492,165 @@ But can be used on time-sequence data - ie. prices, words, characters, etc.
 
 [NEXT]
 
-## The hello_world of sequential models
-
-Predicting prices by fitting a line on set of time-series points
+# Linear Regression
+The hello_world of sequential models
 
 ![classification_small](images/linear-regression.png)
 
-### Linear Regression
+Predicting prices by fitting a line on set of time-series points
 
 
 [NEXT]
-
-# Linear Regression
+<!-- .slide: data-transition="slide-in fade-out" -->
+## Linear Regression ML Pipeline
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
 from sklearn import linear_model
 
+def predict(prices, times, predict=10): 
 
-def predict(prices, times, predict=10):
+    model = linear_model.LinearRegression() 
 
-    model = linear_model.LinearRegression()
+    model.fit(times, prices) 
 
-    model.fit(times, prices)
+    predict_times = get_prediction_timeline(times, predict) 
 
-    predict_times = get_prediction_timeline(times, predict)
-
-    return model.predict(predict_times)
+    return model.predict(predict_times) 
 
 </code></pre>
 
+Very simple to implement using scikit-learn
+
 [NEXT]
-# Linear Regression
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Linear Regression ML Pipeline
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from sklearn import linear_model
+
+# <- Get your transformed data
+def predict(prices, times, predict=10): 
+
+    model = linear_model.LinearRegression() 
+
+    model.fit(times, prices) 
+
+    predict_times = get_prediction_timeline(times, predict) 
+
+    return model.predict(predict_times) 
+
+</code></pre>
+
+Very simple to implement using scikit-learn
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Linear Regression ML Pipeline
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from sklearn import linear_model
+
+# <- Get your transformed data
+def predict(prices, times, predict=10): 
+
+    # <- Select your model
+    model = linear_model.LinearRegression() 
+
+    model.fit(times, prices) 
+
+    predict_times = get_prediction_timeline(times, predict) 
+
+    return model.predict(predict_times) 
+
+</code></pre>
+
+Very simple to implement using scikit-learn
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+
+## Linear Regression ML Pipeline
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from sklearn import linear_model
+
+# <- Get your transformed data
+def predict(prices, times, predict=10): 
+
+    # <- Select your model
+    model = linear_model.LinearRegression() 
+
+    # <- Train your model
+    model.fit(times, prices) 
+
+    predict_times = get_prediction_timeline(times, predict) 
+
+    return model.predict(predict_times) 
+
+</code></pre>
+
+Very simple to implement using scikit-learn
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+
+## Linear Regression ML Pipeline
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from sklearn import linear_model
+
+# <- Get your transformed data
+def predict(prices, times, predict=10): 
+
+    # <- Select your model
+    model = linear_model.LinearRegression() 
+
+    # <- Train your model
+    model.fit(times, prices) 
+
+    # <- Choose unseen datapoints in the right format
+    predict_times = get_prediction_timeline(times, predict) 
+
+    return model.predict(predict_times) 
+
+</code></pre>
+
+Very simple to implement using scikit-learn
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+
+## Linear Regression ML Pipeline
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from sklearn import linear_model
+
+# <- Get your transformed data
+def predict(prices, times, predict=10): 
+
+    # <- Select your model
+    model = linear_model.LinearRegression() 
+
+    # <- Train your model
+    model.fit(times, prices) 
+
+    # <- Choose unseen datapoints in the right format
+    predict_times = get_prediction_timeline(times, predict) 
+
+    # <- Predict using your model
+    return model.predict(predict_times) 
+
+</code></pre>
+
+Very simple to implement using scikit-learn
+
+
+
+[NEXT]
+# Now we can use it!
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
 from crypto_ml.data_loader import CryptoLoader
@@ -465,70 +667,38 @@ results = predict(prices, times, 5)
 
 </code></pre>
 
-### Success
+### Success!
 
 [NEXT]
-### But the Crypto-ML team wants 
-#cutting edge tech
-
-
-[NEXT SECTION]
-# 2. Diving deep into the hype
-
-[NEXT]
-The Crypto-ML team realised that their usecases were much more complex
-
-![perceptron_learning](images/perceptron_learning4.png)
-
-[NEXT]
-The team had to learn many critical points on machine learning development!
-
-<div class="right-col">
-![perceptron_learning](images/perceptron_learning4.png)
-</div>
-
-<br>
-<div class="left-col">
-<ul>
-<li> Extending our feature space</li>
-<li> Increasing number of inputs</li>
-<li> Regularisation techniques (dropout, batch normalisation)</li>
-<li> Normalising datasets</li>
-</ul>
-
-</div>
-
-
-[NEXT]
-But they also stumbled upon some neural network tutorials...
+But the Crypto-ML team stumbled upon some neural network tutorials...
 
 
 [NEXT]
 
-### Remember our favourite function?
-
-`f(x) = mx + b`
-
-Now on a simple perceptron function
-
-in a neural network
-<br>
+#### They learned that Neural Network neurons 
+### have the same function!
 
 ![perceptron](images/perceptron.svg)
 
+`f(x) = mx + b`
+<br>
+
+
+The perceptron function
+
 
 
 [NEXT]
-### Instead of just one neuron
+### So they tooked one neuron
 
 ![rnn_diagram](images/rnn-perceptron.svg)
 
 [NEXT]
-### We just have many
+### And added more
 
 ![rnn_diagram](images/rnn-feedforward.svg)
 
-This gives the function more flexibility
+To allow for more complex functions
 
 
 
@@ -537,37 +707,24 @@ This gives the function more flexibility
 
 ![deep_rnn_diagram](images/rnn-feedforwardlayers.svg)
 
-This gives more flexibility for learning
+To give more flexibility for learning
 
 [NEXT]
 
-### Deep Neural Networks 
+### Then found some deep learning tutorials
 
 ![perceptron_learning](images/layer.jpg)
 
 [NEXT]
-### Deep Networks &mdash; many hidden layers
+### And added many more hidden layers
 
 ![deep_rnn_diagram](images/rnn-deepfeedforward.svg)
 
 [NEXT]
 
-For sequential models?
+Specifically for sequential models?
 ## Deep Recurrent Neural Networks
 # (e.g. LSTMs)
-
-
-[NEXT]
-### Simplified Visualisation
-![rnn_compress_expanded](images/rnn-compress-expanded.svg)
-One node represents a full layer of neurons.
-
-[NEXT]
-### Simplified Visualisation
-
-![rnn_compressed](images/rnn-compress.svg)
-
-One node represents a full layer of neurons.
 
 
 [NEXT]
@@ -578,46 +735,7 @@ Each prediction is a **time step**.
 
 ![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
 
-
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in slide-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-### Recurrent Networks
-
-![rnn_compressed](images/rnn-loopcompressed.svg)
-
-Hidden layer's input includes the output of itself during the last run of the
-network.
-
-
-
-[NEXT] 
-<!-- .slide: data-transition="slide-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars2.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars3.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars4.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars5.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars6.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars7.svg)
-
-[NEXT] 
-<!-- .slide: data-transition="fade-in slide-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-![rnn_unrolled_chars](images/rnn-unrolled-chars8.svg)
+Hidden layer's input includes the output of itself 
 
 [NEXT]
 
@@ -738,22 +856,28 @@ results = deep_predict(prices, times, 5)
 
 </code></pre>
 
-
 ### Success
 
 [NEXT]
 
-# Side note
+## Important to note!
 
-In this example we are training and predicting in the same function.
+In this example we are training and predicting 
 
-Normally you would train your model, and then run the model in "production" for predictions
+### in the same function.
+
+Normally you would 
+### train and persist your model 
+
+and then, separately in production 
+### run the model for predictions
+
 
 
 [NEXT]
 
-## Crypto-ML 
-# has the DL!
+# Crypto-ML 
+### has their own DL Pipeline!
 
 Are we done then?
 
@@ -1015,7 +1139,14 @@ We can pack our ba- oh, not yet?
 Their datapipeline is getting unmanagable!
 
 [NEXT]
-## Growingly complex data flows
+
+## They realised ML is the tip of the iceberg
+![distributed_architecture](images/mlecosystem.png)
+
+Only a small fraction of real-world machine learning is composed of actual ML code
+
+[NEXT]
+## Growing data flow complexity
 
 * There is a growing need to pull data from different sources
 * There is a growing need to pre- and post-process data
@@ -1037,34 +1168,28 @@ Their datapipeline is getting unmanagable!
 
 ![airflow](images/airflow.png)
 
-
 [NEXT]
 # Introducing Airflow
 
 The swiss army knife of data pipelines
 
-<style>
-.check-bullets ul  {
-    list-style:none;
-}
-.check-bullets ul li {
-    padding-top: 10px;
-}
-.check-bullets ul li:before {
-    content: '✅ ';
-}
-.cross-bullets ul  {
-    list-style:none;
-}
-.cross-bullets ul li {
-    padding-top: 10px;
-}
-.cross-bullets ul li:before {
-    content: '❌ ';
-}
-</style>
+[NEXT]
+## But before jumping in
 
+We'll clarify the distinction between the terms:
+* Data pipelines
+* Machine Learning pipelines
 
+<br>
+### Providing a breakdown of definitions
+
+[NEXT]
+
+## Machine Learning Pipelines
+
+are a subset of 
+
+### Data Pipelines
 
 [NEXT]
 # What Airflow is NOT
