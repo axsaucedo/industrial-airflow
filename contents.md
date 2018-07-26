@@ -214,8 +214,7 @@ http://github.com/axsauze/industrial-airflow
 [NEXT]
 
 Crypto-ML Ltd. managed to obtain access to a unique dataset, which allowed them
-
-to built their initial prototype and raise massive amounts of VC money
+to build their initial prototype and raise massive amounts of VC money
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
 import random
@@ -495,12 +494,11 @@ Specifically for sequential models?
 [NEXT]
 ### Unrolled Network for Sequential Data
 
-Each prediction is a **time step** trying to get the next.
-
-Previous predictions help make the _next_ prediction.
+We just try to predict the next time step
 
 ![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
 
+The output of each node is fed with the next input.
 This allows the network to "hold memory"
 
 [NEXT]
@@ -1233,21 +1231,21 @@ are a subset of
 
 [NEXT]
 
-Data pipelines generally encompass
+## Generalising Data Pipelines
+
+<video src="images/automation.mp4" data-autoplay="" loop="" playsinline="">
+</video>
+<!-- .element: style="margin: 10px 0 10px 0" -->
 
 #### Taking data from somewhere
 #### Doing something with it
 #### Putting results back somewhere else
 
 
-<video src="images/automation.mp4" autoplay="" loop="" playsinline="">
-</video>
-
-This encompasses ML processes
 
 [NEXT]
 
-Data pipelines often includes extra complexity:
+### "Data Pipelines" often encompass:
 * Scalability
 * Monitoring
 * Latency
@@ -1255,10 +1253,13 @@ Data pipelines often includes extra complexity:
 * Testing
 
 <br>
-### Thankfully we have tools to help us
+#### Thankfully we have tools to help us
 
 [NEXT]
-# Introducing Airflow
+#### Introducing 
+# Airflow
+
+![airflow](images/airflow.jpeg)
 
 The swiss army knife of data pipelines
 
@@ -1302,7 +1303,7 @@ The swiss army knife of data pipelines
 
 [NEXT]
 <!-- .slide: data-transition="fade-in fade-out" data-background="images/partistat.png" class="smallquote" style="color: black !important" -->
-# Airflow 
+# Airflow in brief
 * A data pipeline framework 
 * Written in Python 
 * It has an active community
@@ -1315,90 +1316,135 @@ The swiss army knife of data pipelines
 
 ## DAG = Directed Acyclic Graphs
 
+These are ETL operations that are executed in order
+and only execute if the previous ones are succesful
+
+[NEXT]
+
+### DAGs are defined programatically
+
+These contain the execution order for operators
+
 ``` python
 # Define DAG
-DAG = DAG(dag_id="test", start_date=datetime.now(), schedule_interval="@once")
+DAG = DAG(dag_id="test",    
+            start_date=datetime.now(), 
+            schedule_interval="@once")
 
 # Define operators
 operator_1 = ...
+operator_2 = ...
+operator_3 = ...
 
 # Define order
 operator_1 >> operator_2 >> operator_3
 ```
-<!-- .element: style="font-size: 0.4em; line-height: 1em;" -->
 
-
-which define the sequence of execution for each operator
+As well as the schedule for execution
 
 
 [NEXT]
-## Airflow has a scheduler
-
-Which can be used to trigger dags on a schedule
+## DAGs overview in list screen
+View all DAGs, together with the schedule of execution
 
 ![cron_tab](images/scheduler.png)
 
-And can also be used to monitor the current status states
+As well as the recent status of executed DAGs
+
+
+[NEXT]
+## Detailed DAG View
+
+![cron_tab](images/treeview.png)
 
 [NEXT]
 
-## DAGs consist of Operators
+## Operators are easy to define
 
-Operators are a wrapper for Python data pipeline logic
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em; ">
+# Create python functions
+DAG = ...
+
+def crypto_prediction():
+    data = ... # gather some data
+    prediction = ... # run some prediction
+    db.store(prediction) # store prediction
+
+# Define Operators
+crypto_task = PythonOperator(
+    task_id='pull_task',
+    python_callable=crypto_prediction, # <- Add python function
+    dag=DAG)
+
+</code></pre>
+
+Here is an example of a PythonOperator
+
+
+[NEXT]
+
+## Airflow provides default operators
 
 ![cron_tab](images/airflowoperators.png)
 
-Airflow provides a broad set of default operators 
+You can use things like BranchOperator, SensorOperator, etc
+
+
 
 [NEXT]
 
-## Data can be passed
+## Passing Data downstream
 
 We can pass data across operators downstream with xcom
 
-This is useful to hold state data, such as a DB index ID
-
-![cron_tab](images/xcom.png)
-
-And we can visualise this in the UI
-
-[NEXT]
-## Airflow is modular
-
-Modular separation of Operator logic & DAG definition
-
-``` python
-# Creating DAG
-DAG = DAG(dag_id='test', start_date=datetime.now(), schedule_interval='@once')
-
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
 # Create python functions
-def push_function(**kwargs):
+def push_function():
     return ['a', 'b', 'c']
 
 def pull_function(**kwargs):
-    ls = kwargs['ti'].xcom_pull(task_ids='push_task')
-    print(ls)
+    params = kwargs['ti'].xcom_pull(task_ids='push_task')
+    print(params)
 
 # Define Operators
 pull_task = PythonOperator(
     task_id='pull_task',
     python_callable=pull_function,
-    provide_context=True,
+    provide_context=True, # <- we pass the context
     dag=DAG)
 
 push_task = PythonOperator(
     task_id='push_task',
     python_callable=push_function,
-    provide_context=True,
+    provide_context=True, # <- again we pass the context
     dag=DAG)
 
 # DAG order definition
 push_task >> pull_task
-```
-<!-- .element: style="font-size: 0.4em; line-height: 1em;" -->
 
-This allows for better testing, and reusability
+</code></pre>
 
+This is useful to hold state data, such as a DB index IDs
+
+[NEXT]
+
+## Visualise downstream params
+
+![cron_tab](images/xcom.png)
+
+You can see XCom parameters for each operator run
+
+
+
+[NEXT]
+## Airflow is modular
+
+Modular separation of code, operators, dags, subdags, etc
+
+![cron_tab](images/subdags.png)
+<!-- .element: style="width: 70%" -->
+
+This allows for better testing and re-usability
 
 [NEXT]
 ## Airflow is extensible 
@@ -1430,11 +1476,17 @@ class AirflowPlugin(object):
 
 It's possible to write your own Operators, hooks, etc
 
+[NEXT]
+If that's not awesome enough...
 
 [NEXT]
-# The tree view (and sub-components)
+It uses celery as task runner
 
-![cron_tab](images/treeview.png)
+![celery_celery](images/celery.jpg)
+
+As well as ability to use different backends
+
+
 
 [NEXT]
 ## The Crypto-ML Usecase
@@ -1446,6 +1498,22 @@ Crypto-ML wants a workflow where:
 * Once ready, a prediction should be computed
 * Prediction should be stored in DB
 * If relevant, a trade should be executed
+
+[NEXT]
+
+Let's break this down into Airflow terminology
+
+[NEXT]
+## Sub-DAG for each crypto
+
+![cron_tab](images/cryptodag-2.png)
+
+[NEXT]
+## DAG for all daily crypto job
+
+![cron_tab](images/cryptodag.png)
+
+
 
 [NEXT]
 ## The Crypto-ML Usecase
@@ -1463,9 +1531,9 @@ Sub-DAG:
 
 
 [NEXT]
-## The Crypto-ML Usecase
+Success!
 
-![cron_tab](images/cryptodag.png)
+![weight_matrix](images/sv.gif)
 
 
 
@@ -1498,9 +1566,7 @@ Sub-DAG:
 
 
 [NEXT]
-What's next for Crypto-ML?
-
-![weight_matrix](images/sv.gif)
+### What's next for Crypto-ML?
 
 As with every other tech startup
 
