@@ -31,7 +31,7 @@
     <td style="float: left; color: white; font-size: 0.7em;">
 
         <br>
-        Head of Solutions Eng/Sci
+        Head of Solutions Engineering
         <br>
         <a style="color: cyan" href="http://eigentech.com">Eigen Technologies</a>
         <br>
