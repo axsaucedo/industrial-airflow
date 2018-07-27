@@ -30,10 +30,10 @@
     </td>
     <td style="float: left; color: white; font-size: 0.7em;">
 
+        CTO
         <br>
-        Head of Solutions Engineering
+        <a style="color: cyan" href="http://e-x.io">Exponential Technologies</a
         <br>
-        <a style="color: cyan" href="http://eigentech.com">Eigen Technologies</a>
         <br>
         <br>
         Chairman
@@ -58,33 +58,7 @@
 </table>
 
 ### <a style="color: cyan" href="#">Contact me at: a@e-x.io</a>
-    
-[NEXT]
-<!-- .slide: data-background="images/network-background.jpg" class="background smallquote" -->
-
-# Eigen Technologies
-
-> Building large scale ML for text analysis
-> <br>
-> <br>
-> Large scale front- & back-office automation
->
-> Mainly operating in Finance, Insurance & Legal
->
-> Recently raised $17.5m to expand R&D & scale
-
-<br>
-### PS. We are hiring -> <a href="http://eigentech.com">eigentech.com</a>
-
-
-
-[NEXT]
-<!-- .slide: data-background="images/network-background.jpg" class="background smallquote" -->
-
-#### The Institute for Ethical AI & ML
-<iframe style="height: 50vh; width: 100vw" src="http://ethical.institute"></iframe>
-#### <a href="http://ethical.institute">http://ethical.institute</a>
-
+  
 
     
 [NEXT]
@@ -436,79 +410,13 @@ And the Crypto-ML wanted to go full hype...
 
 indeed...
 
-
-[NEXT]
-
-#### They learned that Neural Network neurons 
-### have the same function!
-
-![perceptron](images/perceptron.svg)
-
-`f(x) = mx + b`
-<br>
-
-
-The perceptron function
-
-
-
-[NEXT]
-### So they tooked one neuron
-
-![rnn_diagram](images/rnn-perceptron.svg)
-
-[NEXT]
-### And added more
-
-![rnn_diagram](images/rnn-feedforward.svg)
-
-To allow for more complex functions
-
-
-
-[NEXT]
-### With a few layers
-
-![deep_rnn_diagram](images/rnn-feedforwardlayers.svg)
-
-To give more flexibility for learning
-
-[NEXT]
-
-### Then found some deep learning tutorials
-
-![perceptron_learning](images/layer.jpg)
-
-[NEXT]
-### And added many more hidden layers
-
-![deep_rnn_diagram](images/rnn-deepfeedforward.svg)
-
 [NEXT]
 
 Specifically for sequential models?
 ## Deep Recurrent Neural Networks
-# (e.g. LSTMs)
+#  LSTMs!
 
-
-[NEXT]
-### Unrolled Network for Sequential Data
-
-We just try to predict the next time step
-
-![rnn_unrolled_chars](images/rnn-unrolled-chars1.svg)
-
-The output of each node is fed with the next input.
-This allows the network to "hold memory"
-
-[NEXT]
-
-### Loss/Cost function
-Cost function is based on getting the prediction right!
-
-![rnn_unrolled_chars](images/rnn-unrolled-chars9.svg)
-
-
+(Not covering details, but check my LSTM talk in youtube)
 
 
 [NEXT]
@@ -1616,9 +1524,9 @@ http://github.com/axsauze/industrial-airflow
     <td style="float: left; color: white; font-size: 0.7em;">
 
         <br>
-        Head of Deployed Engineering
+        CTO
         <br>
-        <a style="color: cyan" href="http://eigentech.com">Eigen Technologies</a>
+        <a style="color: cyan" href="http://e-x.io">Exponential Technologies</a>
         <br>
         <br>
         Chairman
