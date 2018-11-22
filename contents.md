@@ -1,7 +1,7 @@
 <!-- .slide: data-background="images/network-background.jpg" class="background" -->
 
 <h2>Industrial Machine Learning</h2>
-<h4>Horizontally Scalable Data Pipelines with Airflow</h4>
+<h4>Horizontally Scalable ML Pipelines with Airflow</h4>
 <p>
   <br />
   <br />
@@ -17,11 +17,12 @@
 
 <h2>Industrial Machine Learning</h2>
 
-<h4>Horizontally Scalable Data Pipelines with Airflow</h4>
+<h4>Horizontally Scalable ML Pipelines with Airflow</h4>
 
 <table class="bio-table">
   <tr>
     <td style="float: left">
+        <br>
         ![portrait](images/alejandro.jpg)
         <br>
         <font style="font-weight: bold; color: white">Alejandro Saucedo</font>
@@ -30,26 +31,28 @@
     </td>
     <td style="float: left; color: white; font-size: 0.7em;">
 
-        CTO
         <br>
-        <a style="color: cyan" href="http://e-x.io">Exponential Technologies</a
+        Chief Scientist
         <br>
-        <br>
-        <br>
-        Chairman
-        <br>
-        <a style="color: cyan" href="http://ethical.institute">The Institute for Ethical AI & ML</a>
+        <a style="color: cyan" href="http://e-x.io">The Institute for Ethical AI & ML</a
         <br>
         <br>
-        Member, Broader AI Expert Group
         <br>
-        <a style="color: cyan" href="#">European Commission</a>
+        <hr>
+        <br>
+        Head of Solutions Eng. & Sci.
+        <br>
+        <a style="color: cyan" href="http://eigentech.com">Eigen Technologies</a>
         <br>
         <br>
-        Advisory group
+        Chief Technology Officer
         <br>
-        <a style="color: cyan" href="http://teensinai.com">TeensInAI</a>
+        <a style="color: cyan" href="#">Hack Partners</a>
         <br>
+        <br>
+        Software Engineer
+        <br>
+        <a style="color: cyan" href="#">Bloomberg LP.</a>
 
     </td>
   </tr>
@@ -57,8 +60,6 @@
   </tr>
 </table>
 
-### <a style="color: cyan" href="#">Contact me at: a@e-x.io</a>
-  
 
     
 [NEXT]
@@ -187,245 +188,27 @@ http://github.com/axsauze/industrial-airflow
 
 [NEXT]
 
-Crypto-ML Ltd. managed to obtain access to a unique dataset, which allowed them
-to build their initial prototype and raise massive amounts of VC money
+### JUNE 2017
+
+Crypto-ML Ltd. builds an incredibly accurate model
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-import random
+import random, time
 
 def predict_crypto(self, crypto_data):
-    # I have no clue what I'm doing
-    return crypto_data * random.uniform(0, 1)
+
+    # pretend to do something
+    time.sleep(10)
+
+    return crypto_data * random.uniform(1, 2)
 
 </code></pre>
 
-<br>
-
-### Now they need to figure out what ML is
+### Which resulted on £100m in VC money
 
 [NEXT]
 
-### ML Tutorials Everywhere
-
-![shapes](images/everywhere.jpg)
-
-[NEXT]
-
-## They learned, it's basically
-
-automatically learning from data examples
-
-to predict an output based on an input
-
-![shapes](images/shapes.svg)
-
-**e.g. telling whether a shape is a square or a triangle **
-
-by learning from examples
-
-
-[NEXT]
-## More specifically
-
-* Imagine a 2-d plot
-* The x-axis is the area of the input shape
-* The y-axis is the perimeter of the input shape
-
-![classification](images/classification-points.png)
-
-[NEXT]
-## We want to learn a function
-<br>
-
-<div class="left-col">
-**$f(x̄) = mx̄ + b$**
-<br>
-<br>
-where:
-<br>
-<br>
-**x̄** is input (area & perimeter) </li>
-<br>
-<br>
-**m** and **b** are weights/bias
-<br>
-</div>
-
-<img width="40%" src="images/classification-line.png">
-
-[NEXT]
-
-## So we can predict new data
-
-![classification_small](images/classification-newinput.png)
-
-
-The result **$f(x̄)$** states whether it's a triangle or square
-<br>
-<br>
-(e.g. if it's larger than 0.5 it's triangle otherwise square)
-
-
-
-[NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
-## The machine does the learning
-
-![classification](images/feature-1.jpg)
-
-We give it two examples (one square, one triangle)
-
-[NEXT]
-<!-- .slide: data-transition="fade-in" -->
-## The machine does the learning
-
-![classification](images/feature-2.jpg)
-
-We give it more examples
-
-[NEXT]
-<!-- .slide:data-transition="fade-in slide-out" -->
-## The machine does the learning
-
-![classification](images/feature-3.jpg)
-
-and more...
-
-
-[NEXT]
-### By minimising its cost function
-
-![gradient_descent](images/gradient_descent_cropped.gif)
-
-Keep learning by adjusting the weights...
-
-...until our function becomes more accurate
-
-
-
-[NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
-## We are able to find the weights
-
-<img width="40%" src="images/classification-line.png">
-
-When it finishes, we find optimised weights and biases
-
-i.e. **$f(x̄)$ = triangle  if ($0.3 x̄ + 10$) > 0.5 else square**
-
-[NEXT]
-<!-- .slide: data-transition="fade-in slide-out" -->
-### And predict output of unseen inputs
-
-![classification_small](images/classification-newinput.png)
-
-We now have a system that "knows" how to differentiate triangles from squares
-
-
-[NEXT]
-The Crypto-ML devs asked themselves...
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from crypto_ml.data_loader import CryptoLoader
-
-btc = CryptoLoader().get_df("bitcoin")
-
-btc.head()
-
->            Date    Open    High     Low   Close     Market Cap
-> 1608 2013-04-28  135.30  135.98  132.10  134.21  1,500,520,000
-> 1607 2013-04-29  134.44  147.49  134.00  144.54  1,491,160,000
-> 1606 2013-04-30  144.00  146.93  134.05  139.00  1,597,780,000
-> 1605 2013-05-01  139.00  139.89  107.72  116.99  1,542,820,000
-> 1604 2013-05-02  116.38  125.60   92.28  105.21  1,292,190,000
-
-
-</code></pre>
-
-...can this be used for our cryptocurrency price data?
-
-
-[NEXT]
-# Not yet.
-
-Processing sequential data requires a different approach.
-<br>
-<br>
-
-Instead of trying to predict two classes...
-
-...we want to predict future steps
-<br>
-<br>
-
-
-[NEXT]
-# Sequential Models
-
-Sequential models often are used to predict future data.
-
-<div class="left-col">
-![classification_small](images/linreg.gif)
-</div>
-
-<div class="right-col">
-Still uses the same approach
-<br>
-
-`f(x) = mx + b`  
-<br>
-To find the weights and biases
-<br>
-<br>
-
-But can be used on time-sequence data - ie. prices, words, characters, etc.
-</div>
-
-
-
-
-[NEXT]
-
-# Linear Regression
-The hello_world of sequential models
-
-![classification_small](images/linear-regression.png)
-
-Predicting prices by fitting a line on set of time-series points
-
-[NEXT]
-
-If we use this, the predicted bitcoin price would be
-## A million++ in months
-
-![rnn_diagram](images/extrapolating.png)
-
-Not that people didn't do it...
-
-
-[NEXT]
-And the Crypto-ML wanted to go full hype...
-
-# Deep Neural Networks
-
-indeed...
-
-[NEXT]
-
-Specifically for sequential models?
-## Deep Recurrent Neural Networks
-#  LSTMs!
-
-(Not covering details, but check my LSTM talk in youtube)
-
-
-[NEXT]
-## That's great
-
-But how do we put this into practice?
-
-[NEXT SECTION]
-# 2. Machine Learning Pipelines
+# They had to figure out what ML was
 
 [NEXT]
 The Crypto-ML team realised copy pasting code from 
@@ -438,7 +221,9 @@ wasn't enough...
 
 [NEXT]
 
-They had to do it properly, so they learned how to build their
+They had to do it properly
+
+they learned how to build their
 
 ## Machine Learning Pipeline
 
@@ -452,64 +237,47 @@ They had to do it properly, so they learned how to build their
 
 [NEXT]
 <!-- .slide: data-transition="fade-in fade-out" -->
-This breaks down into 1) "learning the function"
+1) Machine learning model development
 
 ![classification_large](images/mltrain.png)
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
-And then, "using our function to predict" unseen inputs
+And then, using our model to predict unseen inputs
 
 ![classification_large](images/mlall.png)
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
-#### Important: Data transformation & Features
 
-![classification_large](images/mltrainhighlight.png)
+### CryptoML learned the hard way
+![classification_small](images/layer.jpg)
 
-* Focus on improving your "feature space"
-    * This is basically how you represent your data
-        * e.g. squares/triangles == area + perimeter
+### More layers != better performance
 
-    * And what other useful features can you get from it
-        * e.g. color, number of corners, etc
+
 
 [NEXT]
 <!-- .slide: data-transition="fade-in slide-out" -->
-#### Important: ML Model Training
+### Following best practices does
 
-![classification_large](images/mltrainhighlight.png)
+![classification_large](images/mltemp1-training.png)
 
-* Furthermore, training the model requires:
-    * A representative sample of training data
-
-    * Reasonable methods to assess accuracy
-
-    * A relevant model for the type of prediction
-
-
-
-[NEXT]
-### We're ML experts!
-
-Please collect your certificates after the talk
-<br>
-<br>
-
-These are valid in:
-
-* Your Linkedin profile
-* Non-tech Meetups and Parties
-* Any time you reply to a tweet
-
-
-[NEXT]
-# Time to build our pipeline
+* Analysing dataset representability, class imbalance, etc
+* Focusing in feature engineering and analysis
+* Using the right model for the right challenge
+* Taking a pragmatic approach on accuracy
 
 [NEXT]
 <!-- .slide: data-transition="slide-in fade-out" -->
-## Linear Regression ML Pipeline
+### The CryptoML Team felt ready 
+## to build their DL pipeline
+
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+
+## Recurrent neural network
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
 from sklearn import linear_model
@@ -1524,14 +1292,9 @@ http://github.com/axsauze/industrial-airflow
     <td style="float: left; color: white; font-size: 0.7em;">
 
         <br>
-        CTO
+        Chief Scientist
         <br>
-        <a style="color: cyan" href="http://e-x.io">Exponential Technologies</a>
-        <br>
-        <br>
-        Chairman
-        <br>
-        <a style="color: cyan" href="http://ethical.institute">The Institute for Ethical AI & ML</a>
+        <a style="color: cyan" href="http://e-x.io">The Institute for Ethical AI & ML</a>
         <br>
         <br>
         Fellow (AI, Data & ML)
