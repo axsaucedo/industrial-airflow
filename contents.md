@@ -208,7 +208,27 @@ def predict_crypto(self, crypto_data):
 
 [NEXT]
 
-# They had to figure out what ML was
+They found the perfect dataset
+
+<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
+from crypto_ml.data_loader import CryptoLoader
+
+btc = CryptoLoader().get_df("bitcoin")
+
+btc.head()
+
+>            Date    Open    High     Low   Close     Market Cap
+> 1608 2013-04-28  135.30  135.98  132.10  134.21  1,500,520,000
+> 1607 2013-04-29  134.44  147.49  134.00  144.54  1,491,160,000
+> 1606 2013-04-30  144.00  146.93  134.05  139.00  1,597,780,000
+> 1605 2013-05-01  139.00  139.89  107.72  116.99  1,542,820,000
+> 1604 2013-05-02  116.38  125.60   92.28  105.21  1,292,190,000
+
+
+</code></pre>
+
+but they had no idea what to do
+
 
 [NEXT]
 The Crypto-ML team realised copy pasting code from 
@@ -277,181 +297,75 @@ And then, using our model to predict unseen inputs
 [NEXT]
 <!-- .slide: data-transition="slide-in fade-out" -->
 
-## Recurrent neural network
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-def predict(prices, times, predict=10): 
-
-    model = linear_model.LinearRegression() 
-
-    model.fit(times, prices) 
-
-    predict_times = get_prediction_timeline(times, predict) 
-
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" -->
-## Linear Regression ML Pipeline
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-# <- Get your transformed data
-def predict(prices, times, predict=10): 
-
-    model = linear_model.LinearRegression() 
-
-    model.fit(times, prices) 
-
-    predict_times = get_prediction_timeline(times, predict) 
-
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" -->
-## Linear Regression ML Pipeline
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-# <- Get your transformed data
-def predict(prices, times, predict=10): 
-
-    # <- Select your model
-    model = linear_model.LinearRegression() 
-
-    model.fit(times, prices) 
-
-    predict_times = get_prediction_timeline(times, predict) 
-
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" -->
-
-## Linear Regression ML Pipeline
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-# <- Get your transformed data
-def predict(prices, times, predict=10): 
-
-    # <- Select your model
-    model = linear_model.LinearRegression() 
-
-    # <- Train your model
-    model.fit(times, prices) 
-
-    predict_times = get_prediction_timeline(times, predict) 
-
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-[NEXT]
-<!-- .slide: data-transition="fade-in fade-out" -->
-
-## Linear Regression ML Pipeline
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-# <- Get your transformed data
-def predict(prices, times, predict=10): 
-
-    # <- Select your model
-    model = linear_model.LinearRegression() 
-
-    # <- Train your model
-    model.fit(times, prices) 
-
-    # <- Choose unseen datapoints in the right format
-    predict_times = get_prediction_timeline(times, predict) 
-
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-
-[NEXT]
-<!-- .slide: data-transition="fade-in slide-out" -->
-
-## Linear Regression ML Pipeline
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from sklearn import linear_model
-
-# <- Get your transformed data
-def predict(prices, times, predict=10): 
-
-    # <- Select your model
-    model = linear_model.LinearRegression() 
-
-    # <- Train your model
-    model.fit(times, prices) 
-
-    # <- Choose unseen datapoints in the right format
-    predict_times = get_prediction_timeline(times, predict) 
-
-    # <- Predict using your model
-    return model.predict(predict_times) 
-
-</code></pre>
-
-Very simple to implement using scikit-learn
-
-
-
-[NEXT]
-# Now we can use it!
-
-<pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
-from crypto_ml.data_loader import CryptoLoader
-
-
-cl = CryptoLoader()
-
-df = cl.get_df("bitcoin")
-
-times = df[["Date"]].values
-prices = df[["Price"]].values
-
-results = predict(prices, times, 5)
-
-</code></pre>
-
-### Success!
-
-[NEXT]
-### Going Deep: Training an RNN in Python
+### LSTM Training Model
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
 
-def deep_predict(prices):
+def train_lstm_model(prices):
 
-    # <- Generate your transformed data
+    x, y = build_lstm_data(prices, 50)
+   
+    model = get_rnn_model()
+
+    model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
+
+    model.save("latest_model.h5")
+
+</code></pre>
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+
+### LSTM Training Model
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def train_lstm_model(prices):
+
+    # <- Clean and transform data
+    x, y = build_lstm_data(prices, 50)
+   
+    model = get_rnn_model()
+
+    model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
+
+    model.save("latest_model.h5")
+
+</code></pre>
+
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+
+### LSTM Training Model
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def train_lstm_model(prices):
+
+    # <- Clean and transform data
+    x, y = build_lstm_data(prices, 50)
+   
+    # <- Select your model
+    model = get_rnn_model()
+
+    model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
+
+    model.save("latest_model.h5")
+
+</code></pre>
+
+
+[NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
+
+### LSTM Training Model
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def train_lstm_model(prices):
+
+    # <- Clean and transform data
     x, y = build_lstm_data(prices, 50)
    
     # <- Select your model
@@ -460,51 +374,107 @@ def deep_predict(prices):
     # <- Train your model
     model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
 
-    # <- Choose how many unseen datapoints
-    p = 10
-
-    # <- Predict using your model
-    return rnn_predict(model, x, prices, p)
+    model.save("latest_model.h5")
 
 </code></pre>
-
-### Following the exact same steps!
 
 [NEXT]
-### Not too different, eh!
+<!-- .slide: data-transition="slide-in fade-out" -->
+
+### LSTM Training Model
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
-from sklearn import linear_model
 
+def train_lstm_model(prices):
 
-def predict(prices, times, predict=10):
+    # <- Clean and transform data
+    x, y = build_lstm_data(prices, 50)
+   
+    # <- Select your model
+    model = get_rnn_model()
 
-    model = linear_model.LinearRegression()
+    # <- Train your model
+    model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
 
-    model.fit(times, prices)
-
-    predict_times = get_prediction_timeline(times, predict)
-
-    return model.predict(predict_times)
+    # <- Persist your model
+    model.save("latest_model.h5")
 
 </code></pre>
 
+
+
+[NEXT]
+### LSTM Trained Model Inference
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
 
 def deep_predict(prices):
 
-    x, y = build_lstm_data(prices, 50)
+    x = build_lstm_data(prices, 50)
 
-    model = get_rnn_model()
+    model = load_model("latest_model.h5")
 
-    model.fit(x, y, batch_size=512, nb_epoch=1, validation_split=0.05)
-
-    p = 10
-
-    return rnn_predict(model, x, prices, p)
+    return model.predict(x)
 
 </code></pre>
+
+
+[NEXT]
+### LSTM Trained Model Inference
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def deep_predict(prices):
+
+    # <- Transform data
+    x = build_lstm_data(prices, 50)
+
+    model = load_model("latest_model.h5")
+
+    return model.predict(x)
+
+</code></pre>
+
+
+
+[NEXT]
+### LSTM Trained Model Inference
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def deep_predict(prices):
+
+    # <- Transform data
+    x = build_lstm_data(prices, 50)
+
+    # <- Load model
+    model = load_model("latest_model.h5")
+
+    return model.predict(x)
+
+</code></pre>
+
+
+
+[NEXT]
+### LSTM Trained Model Inference
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+
+def deep_predict(prices):
+
+    # <- Transform data
+    x = build_lstm_data(prices, 50)
+
+    # <- Load model
+    model = load_model("latest_model.h5")
+
+    # <- Predict using your model
+    return model.predict(x)
+
+</code></pre>
+
+
 
 [NEXT]
 ### Code to build the the LSTM
