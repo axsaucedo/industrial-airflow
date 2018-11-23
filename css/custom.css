@@ -108,6 +108,10 @@ code.medium {
     margin: 0px !important;
 }
 
+img {
+    background: transparent !important;
+}
+
 /* Images */
 img[alt="portrait"] {
     width: 350px;
@@ -268,6 +272,14 @@ img[alt="tensorflow_graph_marked"] {
 img[alt="classification"] {
     width: 550px;
 }
+
+img[alt="full_height"] {
+    height: 50vh;
+}
+img[alt="full_width"] {
+    width: 100vw;
+}
+
 
 img[alt="classification_small"] {
     width: 450px;

@@ -61,6 +61,75 @@
 </table>
 
 
+[NEXT]
+<!-- .slide: data-state="flashing" data-background-iframe="http://ethical.institute" data-background-color="black" class="background smallquote" style="color: white" -->
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+## http://ethical.institute/
+
+[NEXT]
+<!-- .slide: data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+
+## A new complexity
+
+![full_height](images/mleng-roles.png)
+
+## http://ethical.institute/
+
+[NEXT]
+<!-- .slide: data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+
+## Tackling the core
+
+![full_height](images/mleng-expertise.png)
+
+## http://ethical.institute/
+
+
+[NEXT]
+<!-- .slide: data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+## The core Principles
+
+![full_width](images/principles.jpg)
+
+## http://ethical.institute/
+
+
+[NEXT]
+<!-- .slide: data-background="images/partistat.png" class="background smallquote" style="color: white" -->
+
+## AI Procurement Framework
+
+<div class="left-col">
+<img src="images/rfx-cover.png" alt="">
+</div>
+<div class="right-col">
+<ul>
+    <br>
+    <li>
+        A set of tempaltes to support industry practitioners and suppliers in AI tenders. 
+    </li>
+    <br>
+    <li>
+        Fully open source, built using our "Machine Learning Maturity Model".
+    </li>
+</ul> 
+</div>
+
+
+
+
+
+
     
 [NEXT]
 <!-- .slide: data-background="images/network-background.jpg" class="background smallquote" -->
@@ -303,7 +372,7 @@ And then, using our model to predict unseen inputs
 
 def train_lstm_model(prices):
 
-    x, y = build_lstm_data(prices, 50)
+    x, y = build_lstm_data(prices, WINDOW_SIZE, training=True)
    
     model = get_rnn_model()
 
@@ -314,7 +383,7 @@ def train_lstm_model(prices):
 </code></pre>
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
+<!-- .slide: data-transition="fade-in fade-out" -->
 
 ### LSTM Training Model
 
@@ -323,7 +392,7 @@ def train_lstm_model(prices):
 def train_lstm_model(prices):
 
     # <- Clean and transform data
-    x, y = build_lstm_data(prices, 50)
+    x, y = build_lstm_data(prices, WINDOW_SIZE, training=True)
    
     model = get_rnn_model()
 
@@ -335,7 +404,7 @@ def train_lstm_model(prices):
 
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
+<!-- .slide: data-transition="fade-in fade-out" -->
 
 ### LSTM Training Model
 
@@ -344,7 +413,7 @@ def train_lstm_model(prices):
 def train_lstm_model(prices):
 
     # <- Clean and transform data
-    x, y = build_lstm_data(prices, 50)
+    x, y = build_lstm_data(prices, WINDOW_SIZE, training=True)
    
     # <- Select your model
     model = get_rnn_model()
@@ -357,7 +426,7 @@ def train_lstm_model(prices):
 
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
+<!-- .slide: data-transition="fade-in fade-out" -->
 
 ### LSTM Training Model
 
@@ -366,7 +435,7 @@ def train_lstm_model(prices):
 def train_lstm_model(prices):
 
     # <- Clean and transform data
-    x, y = build_lstm_data(prices, 50)
+    x, y = build_lstm_data(prices, WINDOW_SIZE, training=True)
    
     # <- Select your model
     model = get_rnn_model()
@@ -379,7 +448,7 @@ def train_lstm_model(prices):
 </code></pre>
 
 [NEXT]
-<!-- .slide: data-transition="slide-in fade-out" -->
+<!-- .slide: data-transition="fade-in slide-out" -->
 
 ### LSTM Training Model
 
@@ -388,7 +457,7 @@ def train_lstm_model(prices):
 def train_lstm_model(prices):
 
     # <- Clean and transform data
-    x, y = build_lstm_data(prices, 50)
+    x, y = build_lstm_data(prices, WINDOW_SIZE, training=True)
    
     # <- Select your model
     model = get_rnn_model()
@@ -404,13 +473,14 @@ def train_lstm_model(prices):
 
 
 [NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
 ### LSTM Trained Model Inference
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
 
 def deep_predict(prices):
 
-    x = build_lstm_data(prices, 50)
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
     model = load_model("latest_model.h5")
 
@@ -420,6 +490,7 @@ def deep_predict(prices):
 
 
 [NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
 ### LSTM Trained Model Inference
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
@@ -427,7 +498,7 @@ def deep_predict(prices):
 def deep_predict(prices):
 
     # <- Transform data
-    x = build_lstm_data(prices, 50)
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
     model = load_model("latest_model.h5")
 
@@ -438,6 +509,7 @@ def deep_predict(prices):
 
 
 [NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
 ### LSTM Trained Model Inference
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
@@ -445,7 +517,7 @@ def deep_predict(prices):
 def deep_predict(prices):
 
     # <- Transform data
-    x = build_lstm_data(prices, 50)
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
     # <- Load model
     model = load_model("latest_model.h5")
@@ -457,6 +529,7 @@ def deep_predict(prices):
 
 
 [NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
 ### LSTM Trained Model Inference
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
@@ -464,7 +537,7 @@ def deep_predict(prices):
 def deep_predict(prices):
 
     # <- Transform data
-    x = build_lstm_data(prices, 50)
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
     # <- Load model
     model = load_model("latest_model.h5")
@@ -477,105 +550,54 @@ def deep_predict(prices):
 
 
 [NEXT]
-### Code to build the the LSTM
-
-<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
-from keras.layers.core import Dense, Activation, Dropout
-from keras.layers.recurrent import LSTM
-from keras.models import Sequential
-import lstm
-
-def get_rnn_model():
-    model = Sequential()
-    model.add(LSTM(input_dim=1, output_dim=50, return_sequences=True))
-    model.add(Dropout(0.2))
-
-    model.add(LSTM(100, return_sequences=False))
-    model.add(Dropout(0.2))
-
-    model.add(Dense(output_dim=1))
-    model.add(Activation('linear'))
-
-    model.compile(loss="mse", optimizer="rmsprop")
-
-    return model
-
-</code></pre>
-
-A linear dense layer to aggregate the data into a single value
-
-Compile with mean sq. error & gradient descent as optimizer
-
-Simple!
-
-
-[NEXT]
-# RNN Test-run
+# It works!
 
 <pre><code class="code python hljs" style="font-size: 1em; line-height: 1em">
 from crypto_ml.data_loader import CryptoLoader
 
 
 cl = CryptoLoader()
-
 df = cl.get_df("bitcoin")
 
-times = df[["Date"]].values
 prices = df[["Price"]].values
 
-results = deep_predict(prices, times, 5)
+# Train model
+train_lstm_model(prices)
+
+# Predict using trained model
+result = deep_predict(prices)
 
 </code></pre>
 
-### Success
+[NEXT]
+### Production you say?
 
 [NEXT]
 
-## Important to note!
+<div class="left-col">
+![classification_small](images/crontab.jpg)
+</div>
 
-In this example we are training and predicting 
+<div class="right-col">
 
-### in the same worflow.
+<br>
+<br>
+<h1>Sure!</h1>
+</div>
 
-Normally you would 
-### train and persist your model 
+<br style="clear: both">
 
-and then, separately in production 
-### run the model for predictions
-
-[NEXT]
-
-### Don't underestimate hidden complexities
-
-* Complexity of staging and deploying ML models
-* Storing and standardising your training data
-* Abstracting interfaces to different ML libraries
-* Distributing load across infrastructure
-* Idle resource time minimisation
-* Node failure back-up strategies
-* Testing of Machine Learning functionality
-* Monitoring of ML ecosystem
-
-And the list goes on...
-
-
-[NEXT]
-
-# Crypto-ML 
-### has their own ML/DL Pipeline!
-
-Are we done then?
-
-# Nope
-
-The fun is just starting
+## Good old crontab
+#### It's never failed anyone in production
 
 
 [NEXT SECTION]
 
-# 3. Going distributed 
+# 2. Going distributed 
 
 [NEXT]
+
+## September 2017
 
 After CryptoML was caught using deep learning...
 
@@ -585,23 +607,11 @@ After CryptoML was caught using deep learning...
 
 ## Their userbase exploded
 
-Now they have quite a few users coming in every day 
+They had a massive increase in their user-base
 
-Each user is running several ML algorithms concurrently
-
-They tried getting larger and larger AWS servers
+Users are running too many requests that can't be handled
 
 [NEXT]
-## They should've seen this coming
-
-* Machine learning is known for being computing heavy
-* But often it's forgotten how memory-heavy it is
-* I'm talking VERY heavy - holding whole models in-mem
-* Scaling to bigger instances with more cores is expensive
-* Having everything in one node is a central point of failure
-<br>
-<br>
-
 ### It's time to go distributed
 
 [NEXT]
@@ -621,80 +631,145 @@ They tried getting larger and larger AWS servers
 
 The Crypto-ML Devs thought go distributed was too hard
 
-**It's not.**
+**It's not with celery.**
 
 
 [NEXT]
+<!-- .slide: data-transition="slide-in fade-out" -->
 ## Consumer - Step 1: Choose code
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em">
+def deep_predict(prices):
 
-def deep_predict(prices, times, predict=10):
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
-    model = utils.get_rnn_model()
+    model = load_model("latest_model.h5")
 
-    model.fit(time, prices, batch_size=512, nb_epoch=1, validation_split=0.05)
-
-    predict_times = get_prediction_timeline(times, predict)
-
-    return model.predict(predict_times)
+    return model.predict(x)
 
 </code></pre>
 
 [NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
 ## Consumer - Step 2: Celerize it
 
-<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; "># ml.py
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+app = Celery('crypto_ml')
 
-from celery import Celery
-from utils import load, dump
-
-# Initialise celery with rabbitMQ address
-app = Celery('crypto_ml',
-    backend='amqp://guest@localhost/',    
-    broker='amqp://guest@localhost/')
-
-# Add decorator for task (can also be class)
 @app.task
-def deep_predict(d_prices, d_times, predict=10):
+def deep_predict(d_prices):
 
-    # Load from stringified binaries (Pandas Dataframes)
-    prices = load(d_prices)
-    times = load(d_times)
+    prices = load(prices)
 
-    model = utils.get_rnn_model()
-    model.fit(time, prices, batch_size=512, nb_epoch=1, validation_split=0.05)
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
 
-    predict_times = get_prediction_timeline(times, predict)
+    model = load_model("latest_model.h5")
 
-    return dump(model.predict(predict_times))
+    return dump(model.predict(prices))
 
 </code></pre>
 
-<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; "># utils.py
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Consumer - Step 2: Celerize it
 
-def dump(o):
-    return pickle.dumps(o).hex()
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+# <- Initialise celery with id
+app = Celery('crypto_ml')
 
-def load(o):
-    return pickle.loads(bytearray.fromhex(o))
+@app.task
+def deep_predict(d_prices):
+
+    prices = load(prices)
+
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
+
+    model = load_model("latest_model.h5")
+
+    return dump(model.predict(prices))
 
 </code></pre>
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Consumer - Step 2: Celerize it
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+# <- Initialise celery with id
+app = Celery('crypto_ml')
+
+# <- Convert function into distributed
+@app.task
+def deep_predict(d_prices):
+
+    prices = load(prices)
+
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
+
+    model = load_model("latest_model.h5")
+
+    return dump(model.predict(prices))
+
+</code></pre>
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Consumer - Step 2: Celerize it
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+# <- Initialise celery with id
+app = Celery('crypto_ml')
+
+# <- Convert function into distributed
+@app.task
+def deep_predict(d_prices):
+
+    # <- De-serialise input from queue
+    prices = load(prices)
+
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
+
+    model = load_model("latest_model.h5")
+
+    return dump(model.predict(prices))
+
+</code></pre>
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+## Consumer - Step 2: Celerize it
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+# <- Initialise celery with id
+app = Celery('crypto_ml')
+
+# <- Convert function into distributed
+@app.task
+def deep_predict(d_prices):
+
+    # <- De-serialise input from queue
+    prices = load(prices)
+
+    x = build_lstm_data(prices, WINDOW_SIZE, training=False)
+
+    model = load_model("latest_model.h5")
+
+    # <- Serialise output to return to queue
+    return dump(model.predict(prices))
+
+</code></pre>
+
+
+
 
 [NEXT]
 ## Consumer - Step 3: Run it!
 
-<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">from crypto_ml.models import deep_predict</code></pre>
-
 <pre><code class="code bash hljs" style="font-size: 0.8em; line-height: 1em; ">
 $ celery -A crypto_ml worker
 
-</code></pre>
-
-Monitor the activity logs:
-
-<pre><code class="code bash hljs" style="font-size: 0.8em; line-height: 1em; ">
-$ celery -A crypto_ml worker
 Darwin-15.6.0-x86_64-i386-64bit 2018-03-10 00:43:28
 
 [config]
@@ -716,67 +791,146 @@ Darwin-15.6.0-x86_64-i386-64bit 2018-03-10 00:43:28
 
 Now we just need to make the producer!
 
-**We can just follow the same recipe**
+<br>
+**Pretty much just calling the function**
 
 [NEXT]
-
-## Producer Step 1: Find code
+<!-- .slide: data-transition="slide-in fade-out" -->
+## Producer - Normal function
 
 <pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
-cl = CryptoLoader()
-results = {}
 
-# Compute results
-for name in cl.get_crypto_names():
+prices = cl.get_prices("bitcoin")
 
-    prices, times = cl.get_prices(name)
+result = deep_predict(prices)
 
-    result = deep_predict(prices, times)
+print(result)
 
-    results[name] = result
-
-# Print results
-for k,v in results.items():
-    print(k, v)
-
-
-</code></pre>
-
-[NEXT]
-## Producer - Step 2: Celerize it
-
-<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">from crypto_ml.data_loader import CryptoLoader
-from util import load, dump
-
-cl = CryptoLoader()
-results = {}
-
-# Send task for distributed computing
-for name in cl.get_crypto_names():
-
-    prices, times = cl.get_prices(name)
-
-    task = deep_predict.delay(
-                      dump(prices)
-                    , dump(times))
-
-    results[name] = task
-
-# Wait for results and print
-for k,v in results.items():
-    p_result = v.get()
-
-    if result:
-        result = load(p_result)
-        print(k, result)
 
 </code></pre>
 
 
 [NEXT]
-## Producer - Step 3: Run it!
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Producer - Celerised function
 
-By just running the Python in a shell command!
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+prices = cl.get_prices("bitcoin")
+
+d_prices = dump(prices)
+
+task = deep_predict.delay(d_prices)
+
+p_result = task.get()
+
+result = load(p_result)
+
+print(result)
+
+</code></pre>
+
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Producer - Celerised function
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+prices = cl.get_prices("bitcoin")
+
+# <- Serialise inputs
+d_prices = dump(prices)
+
+task = deep_predict.delay(d_prices)
+
+p_result = task.get()
+
+result = load(p_result)
+
+print(result)
+
+</code></pre>
+
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Producer - Celerised function
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+prices = cl.get_prices("bitcoin")
+
+# <- Serialise inputs
+d_prices = dump(prices)
+
+# <- Call function through distributed worker
+task = deep_predict.delay(d_prices)
+
+p_result = task.get()
+
+result = load(p_result)
+
+print(result)
+
+</code></pre>
+
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in fade-out" -->
+## Producer - Celerised function
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+prices = cl.get_prices("bitcoin")
+
+# <- Serialise inputs
+d_prices = dump(prices)
+
+# <- Call function through distributed worker
+task = deep_predict.delay(d_prices)
+
+# <- Wait for task to finish
+p_result = task.get()
+
+result = load(p_result)
+
+print(result)
+
+</code></pre>
+
+
+[NEXT]
+<!-- .slide: data-transition="fade-in slide-out" -->
+## Producer - Celerised function
+
+<pre><code class="code python hljs" style="font-size: 0.8em; line-height: 1em; ">
+prices = cl.get_prices("bitcoin")
+
+# <- Serialise inputs
+d_prices = dump(prices)
+
+# <- Call function through distributed worker
+task = deep_predict.delay(d_prices)
+
+# <- Wait for task to finish
+p_result = task.get()
+
+# <- De-serialise result
+result = load(p_result)
+
+print(result)
+
+</code></pre>
+
+
+
+
+[NEXT]
+## When we run producer
+
+It adds the task to the queue
+
+And it's picked up by a worker
 
 
 ![distributed_architecture](images/distributed.png)
@@ -810,14 +964,23 @@ We now have ML, and are distributed.
 
 We have surely won.
 
-We can pack our ba- oh, not yet?
-
-### Not really 
+### Not really - getting there
 
 
 [NEXT SECTION]
 
-# 4. Smart Data Pipelines
+# 3. Smart Data Pipelines
+
+[NEXT]
+
+# December 2017
+
+<div class="left-col">
+![full_height](images/santa.jpg)
+</div>
+<div class="right-col">
+![full_height](images/bitcoin-dec.jpg)
+</div>
 
 [NEXT]
 The Crypto-ML has now an 
@@ -825,7 +988,7 @@ The Crypto-ML has now an
 amount of 
 ## internal/external use-cases
 
-Their datapipeline is getting unmanagable!
+Their data pipeline is getting unmanagable!
 
 [NEXT]
 
@@ -847,59 +1010,6 @@ People forget only a small fraction of real-world machine learning is composed o
 <br>
 <br>
 
-[NEXT]
-# They want to go from here
-
-![cron_tab](images/crontab.jpg)
-
-[NEXT]
-# To here
-
-![airflow](images/airflow.png)
-
-[NEXT]
-## But before jumping in
-
-We'll clarify the distinction between the terms:
-* Data pipelines
-* Machine Learning pipelines
-
-<br>
-### Providing a breakdown of definitions
-
-[NEXT]
-
-## Machine Learning Pipelines
-
-are a subset of 
-
-# Data Pipelines
-
-[NEXT]
-
-## Generalising Data Pipelines
-
-<video src="images/automation.mp4" data-autoplay="" loop="" playsinline="">
-</video>
-<!-- .element: style="margin: 10px 0 10px 0" -->
-
-#### Taking data from somewhere
-#### Doing something with it
-#### Putting results back somewhere else
-
-
-
-[NEXT]
-
-### "Data Pipelines" often encompass:
-* Scalability
-* Monitoring
-* Latency
-* Versioning
-* Testing
-
-<br>
-#### Thankfully we have tools to help us
 
 [NEXT]
 #### Introducing 
